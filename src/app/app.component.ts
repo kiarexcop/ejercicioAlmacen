@@ -60,13 +60,13 @@ const P003 : producto = {
 };
 const P004 : producto = {
   codigoP : "P004",
-  nombreP : "CHOCOLATE PRINCESA",
+  nombreP : "HELADO DE MENTA",
   cantidad : 90
   
 };
 const P005 : producto = {
   codigoP : "P004",
-  nombreP : "MAZAMORRA MORADA",
+  nombreP : "HELADO DE CHOCOCHISP",
   cantidad : 70
   
 };
