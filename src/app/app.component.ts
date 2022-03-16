@@ -8,233 +8,101 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'primer-proyecto';
 }
+//-----------------------------------------------------------------------------------------
 
-//-------------------------------------------------------------------------------------
-
-//interface almacen{
-//
-//
-//}
-//-------------------------------------------------------------------------------------
-//Inicio de todo
-export default class Almacen{
-  constructor (
-    private codigoA : string,
-    private nombreA : string,
-    private stock   : producto[]
-  ){}
-  
-  public ingresarProducto(P : producto){
-    this.stock.push(P);
-    console.log("Producto ingresado correctamente.");
-  }
-  
-  public mostrarProducto(){
-    console.log("**********\n**"+this.nombreA+"*\n***********");
-    this.stock.forEach(function(elemento, indice, array) {
-      console.table(elemento);
-    })
-  }
-
-  private buscarProducto(codP : producto){
-    let found = false;
-    let position = -1;
-    let index = 0;
- 
-    while(!found && index < this.stock.length) {
-        if(this.stock[index] == codP) {
-            found = true;
-            position = index;
-        } else {
-            index += 1;
-        }
-    }
-    return position;
-  }
-
-  private quitarProducto(codP : producto){
-    let posicion = this.buscarProducto(codP);
-
-    this.stock.splice(posicion,1);
-  }
-
-  public moverProducto(codP : producto, codA : Almacen){
-    let posicion = this.buscarProducto(codP);
-    if(posicion == -1){
-      console.log("Producto no encontrado");
-
-    }else{
-      codA.ingresarProducto(this.stock[posicion])
-      this.quitarProducto(codP)
-      console.log("Accion Exitosa");
-    }
-  }
-
-  public moverProductoCantidad(codP : producto, codA : Almacen, cantidad : number){
-    for (let index = 0; index < cantidad; index++) {
-      this.moverProducto(codP,codA);
-    }
-  }
-
-  public mostrarInventario(){
-    let i = 0;
-    console.log("**********\n**"+this.nombreA+"*\n***********");
-    let inventario = new Map();
-
-    let cont = 1
-    for (let index = 0; index < this.stock.length; index++) {
-      
-      if(!inventario.has(this.stock[index].nombreP)){
-        inventario.set(this.stock[index].nombreP,1);
-      }else{
-        let found = false;
-        while(!found && i < inventario.size) {
-          if(this.stock[i].nombreP ==  getByValue(inventario,i)) {
-            cont +=1;
-            found = true;
-            inventario.set(this.stock[i].nombreP,cont);
-            } else {
-              i += 1;
-            }
-          }
-        }
-      }
-    for(let CV of inventario.entries()){
-      console.log(CV);
-    }
-  }
-
-  public modificarInventario(R : string, codP : producto, cant : number){
-    if(R == "R"){
-      for (let index = 0; index < cant; index++) {
-          let posicion = this.buscarProducto(codP);
-          if(posicion == -1){
-            console.log("Producto no encontrado");
-          }else{
-            this.quitarProducto(codP);
-          }
-        }
-    }else if(R == "A"){
-        for (let index = 0; index < cant; index++) {
-          this.ingresarProducto(codP);
-        }
-    }else{
-      console.log("Accion no valida\nAcciones Validas: \n-> R : Retirar\n-> A : Agregar")
-    }
-  }
-}
-
-// PRODUCTOS
-
-
-export interface producto {    
+interface Almacen {    
+   codigoA : string,
+   nombreA : string,
+   stock   : producto[]
+};
+interface producto {    
   codigoP : string;
   nombreP  : string;
-}
-
-// FUNCIONES
-
-function getByValue(map: Map<any,string>, post: number){
- let acum = 0;
- for (let [key, value] of map.entries()) {
-   if (acum == post)
-   return key;
- }
- acum += 1;
-}
-//////////////////////////////////////
+  cantidad : number
+};
+//**************************************************************
 /**
- * ALMACENES
+ * AGREGAR ALMACENES
  */
 
- const A001 : Almacen = new Almacen(
-  "A001",
-  "Almacen Cusco",
-  []
-);
-
-const A002 : Almacen = new Almacen(
-  "A002",
-  "Almacen Arequipa",
-  []
-);
-
-const A003 : Almacen = new Almacen(
-  "A003",
-  "Almacen Lima",
-  []
-);
-
-const A004 : Almacen = new Almacen(
-  "A004",
-  "Almacen Loreto",
-  []
-);
+ const A001 :  Almacen = {
+  codigoA : "A001",
+  nombreA : "Almacen Alcchofas",
+  stock   : []
+}
+const A002 :  Almacen = {
+  codigoA : "A002",
+  nombreA : "Almacen Shadow MOth",
+  stock   : []
+}
 
 /**
- * PRODUCTOS
+ * AGREGAR PRODUCTOS
  */
 
 const P001 :  producto = {
   codigoP : "P001",
-  nombreP : "helado de fresa"
+  nombreP : "AJINOMEN",
+  cantidad : 50
 }
 
 const P002 : producto = {
   codigoP : "P002",
-  nombreP : "helado de chocolate"
+  nombreP : "LECHE GLORIA",
+  cantidad : 60
 }
 
 const P003 : producto = {
   codigoP : "P003",
-  nombreP : "helado de vainilla"
-}
-
+  nombreP : "3 OSITOS",
+  cantidad : 80
+  
+};
 const P004 : producto = {
   codigoP : "P004",
-  nombreP : "helado de menta"
-}
+  nombreP : "CHOCOLATE PRINCESA",
+  cantidad : 90
+  
+};
+const P005 : producto = {
+  codigoP : "P004",
+  nombreP : "MAZAMORRA MORADA",
+  cantidad : 70
+  
+};
+//Fuciones
+function agregarProducto(x:any,y:any){
+  x.stock.push(y);
+};
 
+function quitarProducto(x:any,y:any){
+  x.stock.splice(y,1);
+};
+// Almacen01/ producto01 / Almacen 02
+function moverProducto(x:any,y:any,z:any){
 
-/**
- * CONSULTAS
- */
+  z.stock.push(y);
+};
+//AGREGAR PRODUCTO
+agregarProducto(A001,P001);
+agregarProducto(A001,P002);
+agregarProducto(A001,P003);
+agregarProducto(A002,P004);
+agregarProducto(A002,P005);
+//MOSTRAR TABLA
+console.log("ALMACEN 01")
+console.table(A001);
+console.log("ALMACEN 02")
+console.table(A002);
+//QUITAR PRODUCTO
+quitarProducto(A002,0);
+//MOSTRAR TABLA
+console.log("ALMACEN 01")
+console.table(A001);
+console.log("ALMACEN 02")
+console.table(A002);
+//MODIFICAR CANTIDADES
 
-// ALMACEN 1 INGRESAR PRODUCTOS
-A001.ingresarProducto(P001);//Roja
-A001.ingresarProducto(P002);//verde
-A001.ingresarProducto(P003);//amarilla
-
-// MOSTRAMOS ALMACEN
-A001.mostrarProducto();
-
-// ALMACEN 2 INGRESAR PRODUCTOS
-A002.ingresarProducto(P001);
-A002.ingresarProducto(P001);
-A002.ingresarProducto(P001);
-
-//MOSTRANOS ALMACEN
-A002.mostrarProducto();
-
-//ACCION MOVER PRODUCTOS ENTRE ALMACEN (1) 
-A001.moverProducto(P002,A002);
-A001.moverProducto(P002,A002);
-
-//A002.mostrarProducto();
-
-//ACCION MOVER PRODUCTOS ENTRE ALMACEN (*)
-A002.moverProductoCantidad(P001,A001,4);
-//MOSTRANOS ALMACEN
-A001.mostrarProducto();
-A002.mostrarProducto();
-
-//MOSTRAR INVENTARIO CON CANTIDAD
-A001.mostrarInventario();
-
-//MODIFICAR INVENTARIO 
-A001.modificarInventario("R",P003,3);
-A001.mostrarProducto();
-
-// nuevo cambio 
+//MOVER DE ALMACEN 1 A 2
 
 
