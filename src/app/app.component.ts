@@ -27,12 +27,12 @@ interface producto {
 
  const A001 :  Almacen = {
   codigoA : "A001",
-  nombreA : "Almacen Alcchofas",
+  nombreA : "Almacen cusco",
   stock   : []
 }
 const A002 :  Almacen = {
   codigoA : "A002",
-  nombreA : "Almacen Shadow MOth",
+  nombreA : "Almacen urubamba",
   stock   : []
 }
 
@@ -42,19 +42,19 @@ const A002 :  Almacen = {
 
 const P001 :  producto = {
   codigoP : "P001",
-  nombreP : "AJINOMEN",
+  nombreP : "HELADO DE FRESA",
   cantidad : 50
 }
 
 const P002 : producto = {
   codigoP : "P002",
-  nombreP : "LECHE GLORIA",
+  nombreP : "HELADO DE CHOCOLATE",
   cantidad : 60
 }
 
 const P003 : producto = {
   codigoP : "P003",
-  nombreP : "3 OSITOS",
+  nombreP : "HELADO DE VAINILLA",
   cantidad : 80
   
 };
